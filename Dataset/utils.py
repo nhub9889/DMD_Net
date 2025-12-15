@@ -71,7 +71,7 @@ def preprocess(path, save):
     if len(mesh.faces) > (TARGET_FACES*1.5):
         mesh = mesh.simplify_quadric_decimation(face_count=TARGET_FACES)
     
-    components = mesh.split(only_wateright= False)
+    components = mesh.split(only_watertight= False)
     if len(components) > 0:
         mesh = max(components, key= lambda m: len(m.faces))
         
