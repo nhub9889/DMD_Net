@@ -2,3 +2,5 @@ trimesh
 numpy
 torch
 scipy
+glob2
+fast_simplification
