@@ -2,6 +2,8 @@ import torch
 import numpy as np
 import trimesh
 from scipy import sparse
+from  fast_simplification import simplify
+import glob
 import os
 
 TARGET_FACES= 4000
@@ -67,7 +69,7 @@ def preprocess(path, save):
         mesh = mesh.subdivide()
     
     if len(mesh.faces) > (TARGET_FACES*1.5):
-        mesh = mesh.simplify_quadric_decimation(TARGET_FACES)
+        mesh = mesh.simplify_quadric_decimation(face_count=TARGET_FACES)
     
     components = mesh.split(only_wateright= False)
     if len(components) > 0:
@@ -85,3 +87,4 @@ def preprocess(path, save):
         "A_d": A_d,
         "A": A,
     }, save)
+    
