@@ -189,22 +189,32 @@ class Transformer(nn.Module):
         self.agg4 = AGG(in_dim, in_dim)
     
     def forward(self, vertices, features, A):
-        """
-        vertices: [Batch, N, 3]
-        features: [Batch, N, 5]
-        A: [Batch, N, N]
-        """
-        B, N = vertices.shape
         X = self.relu(self.encoder(features))
-        
         X1 = self.agg1(X, A)
         X2 = self.agg2(X + X1, A)
         X3 = self.agg3(X + X1 + X2, A)
         out_X = self.fc(X + X1 + X2 + X3)
-        out_X = torch.mean(out_X, dim= 1)
+        
+        
+        if out_X.dim() == 2:
+            out_X = torch.mean(out_X, dim=0, keepdim=True)
+            B = 1
+            is_2d = True
+        else:
+            out_X = torch.mean(out_X, dim=1)
+            B = out_X.shape[0]
+            is_2d = False
+            
         out_X = out_X.view(B, 8, 512)
-        combined = torch.cat([vertices, features], dim= 2)
+        
+        combined = torch.cat([vertices, features], dim=-1)
+        
+        if is_2d: combined = combined.unsqueeze(0)
+            
         transformer = torch.bmm(combined, out_X)
+        
+        if is_2d: transformer = transformer.squeeze(0)
+            
         out = self.agg4(transformer, A)
         return self.relu(out)
        
