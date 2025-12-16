@@ -194,7 +194,7 @@ class Transformer(nn.Module):
         features: [Batch, N, 5]
         A: [Batch, N, N]
         """
-        B, N, _ = vertices.shape
+        B, N = vertices.shape
         X = self.relu(self.encoder(features))
         
         X1 = self.agg1(X, A)
