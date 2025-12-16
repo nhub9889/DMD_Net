@@ -21,7 +21,7 @@ def dap(Xv, Xf, faces):
 
 class GAGG(nn.Module):
     def __init__(self, in_features, out_features, dropout= 0.5):
-        super().__init__()
+        super(GAGG, self).__init__()
         self.fc = nn.Linear(in_features, out_features)
         self.dropout = dropout
         
@@ -48,7 +48,7 @@ class AGG(nn.Module):
     
 class PDF(nn.Module):
     def __init__(self, dim= 512):
-        super().__init__()
+        super(PDF, self).__init__()
         self.dim = dim
         self.fc_primal = nn.Linear(dim*2, dim)
         self.fc_dual = nn.Linear(dim*2, dim)
@@ -74,6 +74,7 @@ class PDF(nn.Module):
 
 class TwoStreamNet(nn.Module):
     def __init__(self, dim):
+        super(TwoStreamNet, self).__init__()
         self.dim = dim
         self.primal_aggs = nn.ModuleList([
             AGG(dim, dim),
@@ -123,14 +124,14 @@ class Denoiser(nn.Module):
         self.hidden = hidden_dim
         self.in_dim = in_dim
     
-        self.tsn_block = T=nn.ModuleList([
+        self.tsn_block = nn.ModuleList([
             TwoStreamNet(in_dim) for _ in range(hidden_dim)
         ])
         concat_dim = hidden_dim*3*in_dim
         self.dual_mlp = nn.Sequential(
             nn.Linear(concat_dim, 1024),
             nn.ReLU(),
-            nn.linear(1024, 512),
+            nn.Linear(1024, 512),
             nn.ReLU()
         )
         
@@ -185,7 +186,6 @@ class Transformer(nn.Module):
         self.agg1 = AGG(in_dim, in_dim)
         self.agg2 = AGG(in_dim, in_dim)
         self.agg3 = AGG(in_dim, in_dim)
-        self.fap = nn.AvgPool2d()
         self.agg4 = AGG(in_dim, in_dim)
     
     def forward(self, vertices, features, A):

@@ -6,6 +6,7 @@ from modules import Denoiser, Transformer
 
 class DMD(nn.Module):
     def __init__(self, in_dim= 512):
+        super(DMD, self).__init__()
         self.feature_extractor = Denoiser(in_dim= 512, out_dim= 5, hidden_dim= 2)
         self.denoiser = Denoiser(in_dim= in_dim, hidden_dim= 5, out_dim= 3)
         self.transformer = Transformer(in_dim= in_dim)

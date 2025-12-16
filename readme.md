@@ -8,5 +8,3 @@ This repository contains a personal implementation inspired by the DMD_Net paper
 [ ] ShapeNet Dataset(Waiting admin receive)
 
 [ ] ModelNet40(Writing)
-
-# Quick Start
