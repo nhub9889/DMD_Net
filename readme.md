@@ -6,7 +6,7 @@ This repository contains a personal implementation inspired by the DMD_Net paper
 
 # Dataset
 - [] ShapeNet Dataset(Waiting admin receive)
-- [] ModelNet40(Writing)
+- [] ModelNet40(Writing)[Google colab](https://colab.research.google.com/drive/1V5Et5k-m6klSiOJH1JBKSIqcrqFaou_3#scrollTo=o-LEJYJLue37)
 
 ## How test and train
 
@@ -23,8 +23,11 @@ python train.py
 ### Results
 
 ## Inference
+```bash
+python inference.py 
+```
 
-# DMD-Net: Deep Mesh Denoising Network
+## DMD-Net: Deep Mesh Denoising Network
 *Aalok Gangopadhyay, Shashikant Verma, Shanmuganathan Raman*
 [Paper](https://arxiv.org/abs/2506.22850)
 

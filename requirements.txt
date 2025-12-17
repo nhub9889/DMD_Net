@@ -4,3 +4,4 @@ torch
 scipy
 glob2
 fast_simplification
+plotly
